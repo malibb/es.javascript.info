@@ -1,26 +1,26 @@
-# Drag'n'Drop with mouse events
+# Arrastrar y soltar con eventos del mouse. 
 
-Drag'n'Drop is a great interface solution. Taking something and dragging and dropping it is a clear and simple way to do many things, from copying and moving documents (as in file managers) to ordering (dropping items into a cart).
+Arrastar y soltar (Drag'n'Drop en inglés) es una gran solución de interfaz. Tomar algo, arrastrarlo y soltarlo es una forma clara y sencilla de hacer muchas cosas, desde copiar y mover documentos (como en los administradores de archivos) hasta hacer pedidos (como colocar artículos en un carrito).
 
-In the modern HTML standard there's a [section about Drag and Drop](https://html.spec.whatwg.org/multipage/interaction.html#dnd) with special events such as `dragstart`, `dragend`, and so on.
+En el estándar HTML moderno hay una [sección sobre arrastrar y soltar](https://html.spec.whatwg.org/multipage/interaction.html#dnd) con eventos especiales como `dragstart`, `dragend`, etcétera.
 
-These events allow us to support special kinds of drag'n'drop, such as handling dragging a file from OS file-manager and dropping it into the browser window. Then JavaScript can access the contents of such files.
+Estos eventos nos permiten admitir tipos especiales de arrastrar y soltar, como manejar el arrastrar un archivo desde el administrador de archivos del sistema operativo y soltarlo en la ventana del navegador. Entonces JavaScript puede acceder al contenido de dichos archivos.
 
-But native Drag Events also have limitations. For instance, we can't prevent dragging from a certain area. Also we can't make the dragging "horizontal" or "vertical" only. And there are many other drag'n'drop tasks that can't be done using them. Also, mobile device support for such events is very weak.
+Pero los eventos de arrastre nativos también tienen limitaciones. Por ejemplo, no podemos evitar arrastrar desde un área determinada. Tampoco podemos hacer que el arrastre sea "horizontal" o "vertical" solamente. Y hay muchas otras tareas de arrastrar y soltar que no se pueden hacer con ellas. Además, la compatibilidad con dispositivos móviles para tales eventos es muy débil.
 
-So here we'll see how to implement Drag'n'Drop using mouse events.
+Así que aquí veremos cómo implementar arrastrar y soltar usando eventos del mouse.
 
-## Drag'n'Drop algorithm
+## Algoritmos "arrastrar y soltar"
 
-The basic Drag'n'Drop algorithm looks like this:
+El algoritmo básico de arrastrar y soltar se ve así:
 
-1. On `mousedown` - prepare the element for moving, if needed (maybe create a clone of it, add a class to it or whatever).
-2. Then on `mousemove` move it by changing `left/top` with `position:absolute`.
-3. On `mouseup` - perform all actions related to finishing the drag'n'drop.
+1. En `mousedown` - prepare el elemento para moverse, si es necesario (tal vez cree un clon de él, agregue una clase o cualquier otro).
+2. Luego, en `mousemove`, muévalo cambiando` left/top` con `position:absolute`.
+3. En `mouseup` - realice todas las acciones relacionadas con finalizar el arrastrar y soltar.
 
-These are the basics. Later we'll see how to other features, such as highlighting current underlying elements while we drag over them.
+Estos son los conceptos básicos. Más adelante veremos cómo otras características, como resaltar los elementos subyacentes actuales mientras los arrastramos.
 
-Here's the implementation of dragging a ball:
+Aquí está la implementación para arrastrar una pelota:
 
 ```js
 ball.onmousedown = function(event) { 
